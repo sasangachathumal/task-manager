@@ -1,0 +1,26 @@
+<div class="w-md h-fit border border-gray-300 rounded-md bg-white p-4 flex flex-col items-center">
+  <div class="w-full flex flex-row justify-start items-center mb-4">
+    <button type="button" class="btn-gost flex flex-row justify-start items-center gap-2" (click)="goBack()"><lucide-angular
+        [img]="ArrowLeftIcon"></lucide-angular>back</button>
+  </div>
+  @if (taskService.selectedTask(); as task) {
+  <div class="w-full h-fit flex flex-col items-start justify-center gap-2 mb-4">
+    <p class="text-2xl">{{ task.title }}</p>
+    <p class="task-chip" [ngClass]="{
+    'task-chip--done': task.status === taskStatus.Done,
+    'task-chip--inprogress': task.status === taskStatus.InProgress,
+    'task-chip--pending': task.status === taskStatus.Pending
+    }">{{task.status}}</p>
+    <p class="text-gray-600">{{ task.description }}</p>
+    <p class="text-gray-400 text-sm">Created on {{ task.created| date:'medium' }}</p>
+  </div>
+  <div class="w-full h-fit flex flex-row items-center justify-end">
+    <div class="flex flex-row btn-group">
+      <button type="button" class="edit">edit</button>
+      <button type="button" class="delete">delete</button>
+    </div>
+  </div>
+  } @else {
+  <p>Task not found.</p>
+  }
+</div>

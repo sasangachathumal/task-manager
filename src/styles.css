@@ -1,3 +1,56 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import "tailwindcss";
+
+
+/* Buttons */
+/* Base button */
+.btn-default {
+  @apply bg-transparent hover:bg-gray-100 cursor-pointer text-black py-1 px-4 rounded-md border border-gray-200 capitalize;
+}
+
+/* Primary Button */
+.btn-primary {
+  @apply bg-blue-500 hover:bg-blue-700 cursor-pointer text-white py-1 px-4 rounded-md capitalize;
+}
+
+.btn-gost {
+  @apply bg-transparent hover:bg-transparent cursor-pointer text-black py-1 px-0 rounded-md capitalize;
+}
+
+.btn-group {
+  @apply flex flex-row
+}
+
+.btn-group button {
+  @apply bg-transparent hover:bg-gray-100 cursor-pointer text-black py-1 px-2 capitalize flex flex-row border border-gray-200 ;
+}
+
+.btn-group .edit {
+  @apply rounded-tl-md rounded-bl-md border-r-0;
+}
+
+.btn-group .delete {
+  @apply rounded-tr-md rounded-br-md;
+}
+
+
+/* Status chips */
+/* base chip style */
+.task-chip {
+  @apply inline-flex items-center px-2 py-1 rounded-md text-sm capitalize;
+}
+
+/* status variants */
+.task-chip--done {
+  @apply bg-green-100 text-green-700;
+}
+
+.task-chip--inprogress {
+  @apply bg-amber-100 text-amber-700;
+}
+
+.task-chip--pending {
+  @apply bg-gray-100 text-black;
+}
+
