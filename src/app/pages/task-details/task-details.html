@@ -16,8 +16,8 @@
   </div>
   <div class="w-full h-fit flex flex-row items-center justify-end">
     <div class="flex flex-row btn-group">
-      <button type="button" class="edit">edit</button>
-      <button type="button" class="delete">delete</button>
+      <button type="button" class="edit" (click)="editTaskPopup()">edit</button>
+      <button type="button" class="delete" (click)="onDeleteTask(task.id)">delete</button>
     </div>
   </div>
   } @else {

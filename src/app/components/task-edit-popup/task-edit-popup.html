@@ -1,1 +1,48 @@
-<p>task-edit-popup works!</p>
+<div class="w-full h-fit">
+  <p class="text-2xl">{{ isEditMode() ? 'Edit Task' : 'New Task' }}</p>
+  <div class="w-full h-fit mt-3">
+    <form [formGroup]="taskForm" (ngSubmit)="submit()" class="flex flex-col gap-4 w-full">
+
+      <div class="w-full">
+        <label class="mb-1 w-full">Title</label>
+        <input formControlName="title" type="text" class="w-full border border-gray-200 p-2 rounded focus:outline-blue-200"
+          [class.border-red-500]="taskForm.get('title')?.touched && taskForm.get('title')?.invalid">
+        @if (taskForm.get('title')?.touched && taskForm.get('title')?.hasError('required')) {
+          <small class="text-red-500 w-full">Title is required.</small>
+        }
+      </div>
+
+      <div class="w-full">
+        <label class="mb-1 w-full">Description</label>
+        <textarea formControlName="description" class="w-full border border-gray-200 p-2 rounded focus:outline-blue-200" rows="3"
+        [class.border-red-500]="taskForm.get('description')?.touched && taskForm.get('description')?.invalid"></textarea>
+        @if (taskForm.get('description')?.touched && taskForm.get('description')?.hasError('required')) {
+          <small class="text-red-500 w-full">Description is required.</small>
+        }
+      </div>
+
+      @if (isEditMode()) {
+      <div class="w-full">
+        <label class="mb-1 w-full">Status</label>
+        <select formControlName="status" class="w-full border border-gray-200 p-2 rounded focus:outline-blue-200"
+        [class.border-red-500]="isEditMode() && taskForm.get('status')?.touched && taskForm.get('status')?.invalid">
+          @for (status of statusOptions; track status) {
+          <option [value]="status">{{ status }}</option>
+          }
+        </select>
+        @if (isEditMode() && taskForm.get('status')?.touched && taskForm.get('status')?.hasError('required')) {
+          <small class="text-red-500 w-full">Status is required.</small>
+        }
+      </div>
+      }
+
+      <div class="flex justify-end gap-2 mt-4 w-full">
+        <button type="button" (click)="dialogService.close()" class="btn-default disabled:opacity-30">Cancel</button>
+        <button type="submit" [disabled]="taskForm.invalid"
+          class="btn-primary">
+          {{ isEditMode() ? 'Save' : 'Create' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

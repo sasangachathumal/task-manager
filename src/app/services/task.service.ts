@@ -1,6 +1,7 @@
-import { Injectable, computed, effect, inject, signal } from '@angular/core';
+import { computed, effect, inject, Injectable, signal } from '@angular/core';
 import { SortOptions, TaskStatus } from '@enums';
 import { Task } from '@interface';
+import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 import { StorageService } from './storage.service';
 
 @Injectable({
@@ -16,20 +17,30 @@ export class TaskService {
   // selected task ID
   selectedTaskId = signal<number | null>(null);
   selectedStatus = signal<TaskStatus | null>(null);
-  searchedTaskName = signal<string | null>(null);
+
+  searchTerm = signal<string | null>(null);
+  private searchSubject = new Subject<string>();
+
   selectedSort = signal<SortOptions>(SortOptions.Title);
 
   // readonly task array
   tasks = this.tasksSignal.asReadonly();
 
-  onstructor() {
+  constructor() {
     // register effect to update local storage with new tasks list when some update happens.
     effect(() => {
       this.storage.setTaskList(this.tasksSignal());
     });
+
+    // subject for manage user search, wait 300 miliseconds, and triggert ony when changes happened
+    this.searchSubject.pipe(
+      debounceTime(300),
+      distinctUntilChanged()
+    ).subscribe(term => {
+      this.searchTerm.set(term);
+    });
   }
 
-  // 1. Logic to determine initial state
   private getInitialTasks(): Task[] {
     const savedTasks = this.storage.getTaskList();
 
@@ -80,11 +91,23 @@ export class TaskService {
 
   }
 
+  setSearchTerm(term: string) {
+    this.searchSubject.next(term);
+  }
+
   // computed signal for the sorted list
-  sortedTasks = computed(() => {
+  taskList = computed(() => {
+    const term = this.searchTerm()?.toLowerCase();
+    if (term) {
+      return this.searchTaskbyName(term);
+    } else {
+      return this.sortTasks();
+    }
+  });
+
+  sortTasks() {
     const allTasks = this.tasksSignal();
     const criteria = this.selectedSort();
-
     return [...allTasks].sort((a, b) => {
       switch (criteria) {
         case SortOptions.Created:
@@ -95,7 +118,7 @@ export class TaskService {
           return a.status.localeCompare(b.status);
       }
     });
-  });
+  }
 
   // selected Task
   selectedTask = computed(() =>
@@ -111,12 +134,12 @@ export class TaskService {
   });
 
   // search tasks by name
-  searchTaskbyName = computed(() => {
-    const searchName = this.searchedTaskName();
-    if (searchName === null) return this.tasksSignal();
-
-    return this.tasksSignal().filter(t => t.title === searchName);
-  });
+  searchTaskbyName (searchTerm: string) {
+    const allTasks = this.tasksSignal();
+    return allTasks.filter(t =>
+      t.title.toLowerCase().includes(searchTerm)
+    );
+  };
 
   // update the selectedtaskId
   setSelectedTask(id: number) {

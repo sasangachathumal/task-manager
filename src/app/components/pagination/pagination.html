@@ -1,0 +1,21 @@
+<div class="w-full h-fit flex flex-row justify-end items-center gap-2 mt-4">
+
+  <button (click)="changePage(currentPage() - 1)" [disabled]="currentPage() <= 1"
+    class="px-1 py-1 border-0 cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed">
+    <lucide-angular [img]="ChevronLeftIcon"></lucide-angular>
+  </button>
+
+  @for (pageNum of pages(); track pageNum) {
+  <button (click)="changePage(pageNum)" [class.bg-blue-600]="pageNum === currentPage()"
+    [class.text-white]="pageNum === currentPage()"
+    class="px-3 py-1 border border-gray-200 rounded transition-colors cursor-pointer">
+    {{ pageNum }}
+  </button>
+  }
+
+  <button (click)="changePage(currentPage() + 1)" [disabled]="currentPage() >= totalPages()"
+    class="px-1 py-1 border-0 cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed">
+    <lucide-angular [img]="ChevronRightIcon"></lucide-angular>
+  </button>
+
+</div>
