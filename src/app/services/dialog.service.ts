@@ -9,19 +9,22 @@ export class DialogService {
   onConfirm = signal<(() => void) | null>(null);
   confirmMessage = signal<string | null>(null);
   isConfirm = computed(() => {
-    return !!this.onConfirm;
+    return !!this.onConfirm();
   });
 
+  // open popup using a component passing data to it
   open(component: Type<any>, data: any = null, isConfirm: boolean = false) {
     this.activeComponent.set(component);
     this.dialogData.set(data);
   }
 
+  // close the open popup
   close() {
     this.activeComponent.set(null);
     this.dialogData.set(null);
   }
 
+  // handel background close
   bgClose() {
     if (!this.isConfirm()) {
       this.activeComponent.set(null);
@@ -29,6 +32,7 @@ export class DialogService {
     }
   }
 
+  // open confirmation popup usinf a component and passing message and confirmation call back
   openConfirm(component: Type<any>, message: any = null, confirmAction: (() => void) | null = null) {
     this.activeComponent.set(component);
     this.confirmMessage.set(message);
@@ -36,6 +40,7 @@ export class DialogService {
     this.dialogData.set(null);
   }
 
+  // close confirmation popup
   closeConfirm() {
     this.activeComponent.set(null);
     this.dialogData.set(null);

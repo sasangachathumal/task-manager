@@ -4,8 +4,15 @@
     "outDir": "./out-tsc/spec",
     "types": [
       "jest",
-      "node"
-    ]
+      "node",
+      "zone.js"
+    ],
+    "paths": {
+      "@interface": ["./src/app/interfaces/index.ts"],
+      "@enums": ["./src/app/enums/index.ts"],
+      "@service/*": ["./src/app/services/*"],
+      "@components/*": ["./src/app/components/*"]
+    }
   },
   "include": [
     "src/**/*.d.ts",

@@ -50,11 +50,8 @@ export class TaskService {
     if (savedTasks && savedTasks.length > 0) {
       return savedTasks;
     }
-
     this.storage.setTaskList(demoData);
-
     return demoData;
-
   }
 
   setSearchTerm(term: string) {
@@ -91,14 +88,6 @@ export class TaskService {
     this.tasksSignal().find(t => t.id === this.selectedTaskId()) ?? null
   );
 
-  // filter tasks by status
-  tasksByStatus = computed(() => {
-    const status = this.selectedStatus();
-    if (status === null) return this.tasksSignal();
-
-    return this.tasksSignal().filter(t => t.status === status);
-  });
-
   // search tasks by name
   searchTaskbyName (searchTerm: string) {
     const allTasks = this.tasksSignal();
@@ -131,13 +120,6 @@ export class TaskService {
   editTask(updatedTask: Task) {
     this.tasksSignal.update((tasks) =>
       tasks.map((t) => t.id === updatedTask.id ? updatedTask : t)
-    );
-  }
-
-  // update task status
-  toggleTask(id: number, status: TaskStatus) {
-    this.tasksSignal.update((tasks) =>
-      tasks.map((t) => (t.id === id ? { ...t, status: status } : t))
     );
   }
 
