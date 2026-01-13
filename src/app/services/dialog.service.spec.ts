@@ -71,6 +71,7 @@ describe('DialogService', () => {
       expect(service.activeComponent()).toBe(MockPopupComponent);
       expect(service.confirmMessage()).toBe(message);
       expect(service.onConfirm()).toBe(confirmSpy);
+      expect(service.dialogData()).toBeNull();
     });
 
     it('should NOT close on background click if it is a confirmation dialog', () => {
@@ -89,6 +90,15 @@ describe('DialogService', () => {
       expect(service.activeComponent()).toBeNull();
       expect(service.onConfirm()).toBeNull();
       expect(service.confirmMessage()).toBeNull();
+    });
+
+    it('should handle openConfirm with default parameters', () => {
+      service.openConfirm(MockPopupComponent);
+
+      expect(service.activeComponent()).toBe(MockPopupComponent);
+      expect(service.confirmMessage()).toBeNull();
+      expect(service.onConfirm()).toBeNull();
+      expect(service.dialogData()).toBeNull();
     });
   });
 

@@ -10,6 +10,6 @@ import { DialogService } from '@service/dialog.service';
   styleUrl: './app.css'
 })
 export class App {
-  protected readonly title = signal('task-manager-MyBudget');
+  protected readonly title = signal('task-manager');
   protected dialogService = inject(DialogService);
 }

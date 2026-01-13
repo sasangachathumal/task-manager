@@ -81,6 +81,21 @@ describe('TaskEditPopup', () => {
       expect(mockTaskService.addTask).toHaveBeenCalled();
     });
 
+    it('should mark all fields as touched if form is submitted while invalid', () => {
+      component.taskForm.patchValue({
+        title: '',
+        description: ''
+      });
+
+      component.submit();
+
+      const titleControl = component.taskForm.get('title');
+      const descControl = component.taskForm.get('description');
+
+      expect(titleControl?.touched).toBe(true);
+      expect(descControl?.touched).toBe(true);
+    });
+
     it('should call editTask when in Edit Mode', () => {
       mockDialogService.dialogData.set({ id: 123, title: 'Old', description: 'Old' });
       component.ngOnInit();
@@ -149,7 +164,7 @@ describe('TaskEditPopup', () => {
     expect(submitBtn.textContent).toContain('Create');
   });
 
-    it('should show "Save" in Edit Mode', () => {
+  it('should show "Save" in Edit Mode', () => {
     mockDialogService.dialogData.set({ id: 1, title: 'T', description: 'D' });
     component.ngOnInit();
     fixture.detectChanges();

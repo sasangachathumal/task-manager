@@ -65,4 +65,12 @@ describe('ConfirmPopup', () => {
     expect(compiled.textContent).toContain(testMessage);
   });
 
+  it('should only close if no action exists (Else Branch)', () => {
+    onConfirmSignal.set(null);
+
+    component.handleConfirm();
+
+    expect(mockDialogService.closeConfirm).toHaveBeenCalled();
+  });
+
 });

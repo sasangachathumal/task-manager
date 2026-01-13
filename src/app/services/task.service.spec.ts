@@ -41,6 +41,32 @@ describe('TaskService', () => {
     expect(storageServiceMock.getTaskList).toHaveBeenCalled();
   });
 
+  it('should initialize with demo data when storage is empty', () => {
+    TestBed.resetTestingModule();
+
+    storageServiceMock.getTaskList.mockReturnValue(null);
+
+    TestBed.configureTestingModule({
+      providers: [
+        TaskService,
+        { provide: StorageService, useValue: storageServiceMock }
+      ]
+    });
+
+    const freshService = TestBed.inject(TaskService);
+    const currentTasks = freshService['tasksSignal']();
+
+    expect(storageServiceMock.setTaskList).toHaveBeenCalledWith(currentTasks);
+  });
+
+  it('should save to storage via effect when tasks are updated', () => {
+    service.addTask({ id: 99, title: 'Effect Test' } as any);
+
+    TestBed.flushEffects();
+
+    expect(storageServiceMock.setTaskList).toHaveBeenCalled();
+  });
+
   describe('Sorting tasks', () => {
     it('should sort tasks by Title by default', () => {
       const sorted = service.taskList();
@@ -58,6 +84,14 @@ describe('TaskService', () => {
       const sorted = service.taskList();
       expect(sorted[0].status).toBe(TaskStatus.Done);
     });
+
+    it('should not update selectedSort if sortOpt is falsy', () => {
+    service.setSelectedSort(SortOptions.Title);
+
+    service.setSelectedSort(null as any);
+
+    expect(service.selectedSort()).toBe(SortOptions.Title);
+  });
   });
 
   describe('Searching tasks', () => {
@@ -86,6 +120,14 @@ describe('TaskService', () => {
   it('should find a selected task when ID is set', () => {
     service.setSelectedTask(1);
     expect(service.selectedTask()?.title).toBe('B Task');
+  });
+
+  it('should not update selectedTaskId if id is 0 or falsy', () => {
+    const initialId = service.selectedTaskId();
+
+    service.setSelectedTask(0);
+
+    expect(service.selectedTaskId()).toBe(initialId);
   });
 
   it('should remove a task', () => {

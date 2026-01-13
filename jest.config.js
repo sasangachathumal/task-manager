@@ -13,6 +13,11 @@ module.exports = {
       stringifyContentPathRegex: '\\.(html|svg)$',
     },
   },
+  testPathIgnorePatterns: [
+    "<rootDir>/node_modules/",
+    "<rootDir>/e2e/",
+    "\\.e2e-spec\\.ts$"
+  ],
   // This line is crucial for modern Angular (ESM)
   transformIgnorePatterns: ['node_modules/(?!.*\\.mjs$)'],
 };

@@ -35,7 +35,6 @@ export class TaskDetails implements OnInit {
 
   goBack() {
     this.taskService.setSelectedTask(0);
-
     this.router.navigate(['']);
   }
 
