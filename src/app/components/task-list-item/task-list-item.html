@@ -1,11 +1,11 @@
-<div class="w-full h-fit p-3 border border-gray-200 rounded-md flex flex-col items-start justify-center">
-  <p class="w-full h-fit text-black">{{task().title}}</p>
+<div class="w-full h-fit p-3 border border-gray-200 rounded-md flex flex-col items-start justify-center" data-tm="task-list-item">
+  <p class="w-full h-fit text-black" data-tm="txt-item-title">{{task().title}}</p>
   <div class="w-full h-fit flex flex-row justify-between items-center mt-2">
     <p class="task-chip" [ngClass]="{
     'task-chip--done': task().status === taskStatus.Done,
     'task-chip--inprogress': task().status === taskStatus.InProgress,
     'task-chip--pending': task().status === taskStatus.Pending
-    }">{{task().status}}</p>
-    <button class="btn-default" (click)="openDetails()">details</button>
+    }" data-tm="txt-item-status">{{task().status}}</p>
+    <button class="btn-default" (click)="openDetails()" data-tm="btn-details">details</button>
   </div>
 </div>

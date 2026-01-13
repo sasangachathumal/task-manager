@@ -1,10 +1,10 @@
 <div class="text-center">
   <h2 class="text-lg font-bold mb-4">Are you sure?</h2>
-  <p class="mb-6">{{ dialogService.confirmMessage() || 'Do you really want to proceed?' }}</p>
+  <p class="mb-6" data-tm="txt-confirm-msg">{{ dialogService.confirmMessage() || 'Do you really want to proceed?' }}</p>
 
   <div class="flex justify-center gap-4">
-    <button (click)="dialogService.closeConfirm()" class="btn-default">Cancel</button>
-    <button (click)="handleConfirm()" class="btn-danger">
+    <button (click)="dialogService.closeConfirm()" class="btn-default" data-tm="btn-cancel">Cancel</button>
+    <button (click)="handleConfirm()" class="btn-danger" data-tm="btn-confirm">
       Confirm
     </button>
   </div>

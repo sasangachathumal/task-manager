@@ -1,6 +1,6 @@
 <div class="w-md h-fit border border-gray-300 rounded-md bg-white p-4 flex flex-col items-center">
   <div class="w-full flex flex-row justify-end items-center mb-4">
-    <button type="button" class="btn-primary" (click)="newTaskPopup()">New</button>
+    <button type="button" class="btn-primary" (click)="newTaskPopup()" data-tm="btn-new-task">New</button>
   </div>
 
   <div class="w-full flex flex-row justify-center items-center">
@@ -12,7 +12,7 @@
       </div>
       <input id="searchText" type="text" name="searchText" placeholder="search..."
         class="w-full py-1.5 pr-3 pl-2 text-base placeholder:text-gray-500 focus:outline-none sm:text-sm/6"
-        (input)="onSearch($event)"/>
+        (input)="onSearch($event)" data-tm="input-task-search"/>
     </div>
   </div>
 
@@ -23,11 +23,11 @@
         <select
           class="w-full appearance-none rounded-lg border border-gray-300 bg-white px-2 py-1.5 pr-8
           text-gray-700 hover:border-gray-400 focus:border-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-100"
-          (change)="onSortChange($event)">
+          (change)="onSortChange($event)" data-tm="select-tasks-sort">
           @for (option of sortOptionList; track option) {
-          <option [value]="option">{{option}}</option>
+          <option [value]="option" [attr.data-tm]="`opt-${option}`">{{option}}</option>
           } @empty {
-          <option value="---">---</option>
+          <option value="---" data-tm="opt-empty">---</option>
           }
         </select>
         <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">

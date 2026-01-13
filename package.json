@@ -8,7 +8,10 @@
     "watch": "ng build --watch --configuration development",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:full-check": "npm run test:coverage && npm run test:e2e"
   },
   "prettier": {
     "printWidth": 100,
