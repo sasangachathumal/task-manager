@@ -8,7 +8,7 @@
         <input formControlName="title" type="text" class="w-full border border-gray-200 p-2 rounded focus:outline-blue-200"
           [class.border-red-500]="taskForm.get('title')?.touched && taskForm.get('title')?.invalid">
         @if (taskForm.get('title')?.touched && taskForm.get('title')?.hasError('required')) {
-          <small class="text-red-500 w-full">Title is required.</small>
+          <small class="text-red-500 w-full" data-tm="title-error">Title is required.</small>
         }
       </div>
 
@@ -17,7 +17,7 @@
         <textarea formControlName="description" class="w-full border border-gray-200 p-2 rounded focus:outline-blue-200" rows="3"
         [class.border-red-500]="taskForm.get('description')?.touched && taskForm.get('description')?.invalid"></textarea>
         @if (taskForm.get('description')?.touched && taskForm.get('description')?.hasError('required')) {
-          <small class="text-red-500 w-full">Description is required.</small>
+          <small class="text-red-500 w-full" data-tm="desc-error">Description is required.</small>
         }
       </div>
 
@@ -25,13 +25,14 @@
       <div class="w-full">
         <label class="mb-1 w-full">Status</label>
         <select formControlName="status" class="w-full border border-gray-200 p-2 rounded focus:outline-blue-200"
-        [class.border-red-500]="isEditMode() && taskForm.get('status')?.touched && taskForm.get('status')?.invalid">
+        [class.border-red-500]="isEditMode() && taskForm.get('status')?.touched && taskForm.get('status')?.invalid"
+        data-tm="status-selector">
           @for (status of statusOptions; track status) {
           <option [value]="status">{{ status }}</option>
           }
         </select>
         @if (isEditMode() && taskForm.get('status')?.touched && taskForm.get('status')?.hasError('required')) {
-          <small class="text-red-500 w-full">Status is required.</small>
+          <small class="text-red-500 w-full" data-tm="status-error">Status is required.</small>
         }
       </div>
       }
@@ -39,7 +40,7 @@
       <div class="flex justify-end gap-2 mt-4 w-full">
         <button type="button" (click)="dialogService.close()" class="btn-default disabled:opacity-30">Cancel</button>
         <button type="submit" [disabled]="taskForm.invalid"
-          class="btn-primary">
+          class="btn-primary" data-tm="submit-btn">
           {{ isEditMode() ? 'Save' : 'Create' }}
         </button>
       </div>

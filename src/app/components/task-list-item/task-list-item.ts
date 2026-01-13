@@ -21,9 +21,7 @@ export class TaskListItem {
 
   openDetails() {
     const id = this.task().id;
-
     this.taskService.setSelectedTask(id);
-
     this.router.navigate(['/detail', id]);
   }
 

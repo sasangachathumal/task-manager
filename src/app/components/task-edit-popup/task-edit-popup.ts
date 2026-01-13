@@ -59,7 +59,7 @@ export class TaskEditPopup implements OnInit {
 
       this.dialogService.close();
     } else {
-      this.taskForm.markAllAsTouched(); // Show validation errors
+      this.taskForm.markAllAsTouched();
     }
   }
 

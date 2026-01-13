@@ -1,6 +1,6 @@
 @if (dialogService.activeComponent(); as component) {
-<div class="overlay" (click)="dialogService.bgClose()">
-  <div class="bg-white p-4 rounded-lg relative shadow shadow-gray-300 w-md h-fit" (click)="$event.stopPropagation()">
+<div class="overlay" (click)="dialogService.bgClose()" data-tm="dialog-overlay">
+  <div class="bg-white p-4 rounded-lg relative shadow shadow-gray-300 w-md h-fit" data-tm="dialog-body" (click)="$event.stopPropagation()">
     <ng-container *ngComponentOutlet="component" />
   </div>
 </div>
