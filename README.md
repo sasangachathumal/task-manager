@@ -38,7 +38,7 @@ While the UI state is managed by Signals, I chose RxJS specifically for the sear
 
 ### Unit Testing (Jest)
 
-**Coverage:** 100% logic coverage for Services, Pipes, and Component logic.
+**Coverage:** 100% logic coverage for Services and Component logic.
 
 **Focus:** Verifying business rules, data transformations, and state transitions in isolation.
 
